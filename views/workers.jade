@@ -1,0 +1,13 @@
+doctype
+html
+	head
+	title Workers
+	
+	h1 Workers
+	
+	ul
+		each worker in workers
+			li(id= worker.id).worker
+				span= worker.id
+				span= worker.name
+				span= worker.gender

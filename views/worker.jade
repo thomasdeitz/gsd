@@ -1,0 +1,17 @@
+doctype
+html
+	head
+	title= worker[0].name
+	link(href="/main.css" rel="stylesheet")
+	
+	h1= worker[0].name
+	
+	div $#{worker[0].total}.00
+	
+	div= worker[0].count
+	
+	ul
+		each workItem in worker.workList
+			li= workItem.name 
+				span $#{ workItem.value }.00
+			

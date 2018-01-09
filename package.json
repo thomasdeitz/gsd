@@ -1,0 +1,17 @@
+{
+  "name": "gsd",
+  "version": "1.0.0",
+  "description": "An app to manage, track, & reward family members and their participation in house hold work.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Thomas Deitz",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "jade": "^1.11.0",
+    "node-sass-middleware": "^0.11.0"
+  }
+}
