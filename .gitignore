@@ -1,2 +1,2 @@
 # ignore node directory
-**/node_modules
+**/node_modules/**
