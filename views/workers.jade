@@ -6,7 +6,5 @@ block content
 	
 	ul
 		each worker in workers
-			li(id= worker.id).worker
-				span= worker.id
-				span= worker.name
-				span= worker.gender
+			li
+				a(href="./workers/#{ worker.id }")= worker.name

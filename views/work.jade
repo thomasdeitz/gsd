@@ -8,28 +8,33 @@ block content
 	form
 		input(type="text", name="workItem", placeholder="Enter a work item...", required)
 		input(type="number", name="workItemValue", placeholder="How much is it worth?", required)
+		
 		button(type="submit") Add Work Item
 		
 	h1 Work Items
 
 	table(width="100%")
 		each workItem in work
-			tr(id= workItem.id).work-item
-				td= workItem.name
-				td  $#{workItem.value}.00
+			tr(id= workItem.WorkId).work-item
+				td= workItem.WorkDescription
+				if workItem.WorkValue > 0 
+					td  $#{workItem.WorkValue}.00
+				else
+					td FREE
 				td
-					select.worker-select(value= workItem.worker_id)
+					select.worker-select(WorkValue= workItem.WorkerId)
 						option(value="0") Unassigned
 						each worker in workers
-							option(value= worker.id selected= workItem.worker_id == worker.id ? true : false)
-								= worker.name
+							option(value= worker.WorkerId selected= workItem.WorkerId == worker.WorkerId ? true : false)
+								= worker.WorkerName
 				td
-					span.remove Remove	
+					span.remove Remove Item	
 				td
-					span.done Done
+					span.done Mark Done
 					
+	h3 Workers				
 	ul
 		each worker in workers
 			li
-				a(href="./workers/#{ worker.id }")= worker.name
+				a(href="./workers/#{ worker.WorkerId }")= worker.WorkerName
 						

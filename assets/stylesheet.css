@@ -6,3 +6,23 @@ ul {
   list-style: none;
   padding: 0px;
   margin: 0px; }
+  ul li {
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px; }
+
+table {
+  perspective: 2000px; }
+
+tr {
+  position: relative;
+  display: block;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: lime;
+  transform: scaleX(1) scaleY(1) scaleZ(1) rotateX(3deg) rotateY(35deg) rotateZ(0deg) skew(20deg, 0deg);
+  perspective-origin: 75% 34%; }
+  tr td {
+    transform: scaleX(1) scaleY(1) scaleZ(1) rotateX(-3deg) rotateY(-35deg) rotateZ(0deg) skew(-20deg, 0deg);
+    perspective-origin: 75% 34%; }

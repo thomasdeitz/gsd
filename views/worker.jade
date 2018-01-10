@@ -5,11 +5,25 @@ block title
 block content
 	h1= worker.name
 	
-	div $#{worker.total}.00
+	if worker.total > 0 
+		div $#{worker.total}.00 Earned
+	else
+		div No earnings
 	
-	div= worker.count
+	if worker.count > 0
+		if worker.count > 1 
+			div #{ worker.count } Items Completed
+		else
+			div #{ worker.count } Item Completed
+			
+	else
+		div No work Completed
 	
+	h3 Work Items Completed
 	ul
 		each workItem in worker.workList
 			li= workItem.name 
-				span $#{ workItem.value }.00
+				if workItem.WorkValue > 0 
+					span  $#{workItem.WorkValue}.00
+				else
+					span FREE
