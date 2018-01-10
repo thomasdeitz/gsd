@@ -1,35 +1,35 @@
-doctype
-html
-	head
+extends ./_shared/layout
+block title
 	title Work to be done.
-	script(src='/worklist.js')
-	link(href='/style.css', rel='stylesheet')
 
-	body
-		h1 Add Work Item
+block content
+	h1 Add Work Item
+	
+	form
+		input(type="text", name="workItem", placeholder="Enter a work item...", required)
+		input(type="number", name="workItemValue", placeholder="How much is it worth?", required)
+		button(type="submit") Add Work Item
 		
-		form
-			input(type="text", name="workItem", placeholder="Enter a work item...", required)
-			input(type="number", name="workItemValue", placeholder="How much is it worth?", required)
-			button(type="submit") Add Work Item
-			
-		h1 Work Items
+	h1 Work Items
 
-		table(width="100%")
-			each workItem in work
-				tr(id= workItem.id).work-item
-					td= workItem.name
-					td  $#{workItem.value}.00
-					td
-						select.worker-select(value= workItem.worker_id)
-							option(value="0") Unassigned
-							each worker in workers
-								option(value= worker.id selected= workItem.worker_id == worker.id ? true : false)
-									= worker.name
-					td
-						span.remove Remove	
-					td
-						span.done Done
+	table(width="100%")
+		each workItem in work
+			tr(id= workItem.id).work-item
+				td= workItem.name
+				td  $#{workItem.value}.00
+				td
+					select.worker-select(value= workItem.worker_id)
+						option(value="0") Unassigned
+						each worker in workers
+							option(value= worker.id selected= workItem.worker_id == worker.id ? true : false)
+								= worker.name
+				td
+					span.remove Remove	
+				td
+					span.done Done
+					
+	ul
+		each worker in workers
+			li
+				a(href="./workers/#{ worker.id }")= worker.name
 						
-		ul#authors
-			li test

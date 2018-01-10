@@ -13,13 +13,13 @@ app.set('view engine', 'jade');
 app.use(
      sass({
 	    src: __dirname + '/', 
-	    dest: __dirname + '../../public_html/tom',
+	    dest: path.join(__dirname, 'assets'),
 	    debug: true,       
 	})
 );
 
 //static files
-app.use(express.static(__dirname + '../../public_html/tom'));﻿
+app.use('/', express.static(path.join(__dirname, 'assets')));﻿
 
 //fire controllers
 workController(app);

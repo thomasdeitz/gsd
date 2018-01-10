@@ -1,17 +1,15 @@
-doctype
-html
-	head
-	title= worker[0].name
-	link(href="/main.css" rel="stylesheet")
+extends ./_shared/layout
+block title
+	title= worker.name
+
+block content
+	h1= worker.name
 	
-	h1= worker[0].name
+	div $#{worker.total}.00
 	
-	div $#{worker[0].total}.00
-	
-	div= worker[0].count
+	div= worker.count
 	
 	ul
 		each workItem in worker.workList
 			li= workItem.name 
 				span $#{ workItem.value }.00
-			

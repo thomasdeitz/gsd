@@ -3,6 +3,7 @@ var mysql = require('mysql');
 var jsonParser = bodyParser.json();
 
 var con = mysql.createConnection({
+  multipleStatements: true,
   host: "localhost",
   user: "thomasd4_dbTest",
   password: "Td11-23-99",
@@ -15,11 +16,14 @@ module.exports = function(app) {
 	
 	//gets all work Items
 	app.get('/work', function(req, res){
-		//SELECT workItems.*, workers.name AS worker_name FROM workItems LEFT JOIN workers ON workers.id = workItems.worker_id ORDER BY workItems.id;
+		var getWork = "SELECT * FROM workItems WHERE NOT status = 1;";
+		var getWorkers = "SELECT name, id FROM workers;";
 		
-		con.query("SELECT * FROM workItems WHERE NOT status = 1", function (err, result, fields) {
+		
+		con.query(getWork + getWorkers, function (err, result, fields) {
 			if (err) throw err;
-				res.render('work', {work: result, workers: [{name: "Abby", id: 1}, {name: "Lucas", id: 2}, {name: "Isaac", id: 3}]});
+				res.render('work', {work: result[0], workers: result[1]});
+				console.log(result);
 		});
 	});
 	
@@ -39,7 +43,6 @@ module.exports = function(app) {
 			if (err) throw err;
 		    	res.json(result);
 		 });
-		//res.render('work', {work: data});
 	});
 	
 	app.patch('/work/claim/:wI', jsonParser, function(req, res){
