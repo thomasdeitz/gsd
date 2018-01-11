@@ -5,7 +5,7 @@ block title
 block content
 	h1 Add Work Item
 	
-	form
+	form.wi
 		input(type="text", name="workItem", placeholder="Enter a work item...", required)
 		input(type="number", name="workItemValue", placeholder="How much is it worth?", required)
 		
@@ -13,28 +13,24 @@ block content
 		
 	h1 Work Items
 
-	table(width="100%")
-		each workItem in work
-			tr(id= workItem.WorkId).work-item
-				td= workItem.WorkDescription
-				if workItem.WorkValue > 0 
-					td  $#{workItem.WorkValue}.00
-				else
-					td FREE
-				td
-					select.worker-select(WorkValue= workItem.WorkerId)
-						option(value="0") Unassigned
-						each worker in workers
-							option(value= worker.WorkerId selected= workItem.WorkerId == worker.WorkerId ? true : false)
-								= worker.WorkerName
-				td
-					span.remove Remove Item	
-				td
-					span.done Mark Done
-					
-	h3 Workers				
-	ul
+	each workItem in work
+		div(id= workItem.WorkId).work-item
+			div= workItem.WorkDescription
+			if workItem.WorkValue > 0 
+				div  $#{workItem.WorkValue}.00
+			else
+				div FREE
+			td
+				select.worker-select(WorkValue= workItem.WorkerId)
+					option(value="0") Unassigned
+					each worker in workers
+						option(value= worker.WorkerId selected= workItem.WorkerId == worker.WorkerId ? true : false)
+							= worker.WorkerName
+			div
+				span.remove.fa.fa-times
+				span.done.fa.fa-check
+	div#workers
+		h3 Workers				
 		each worker in workers
-			li
-				a(href="./workers/#{ worker.WorkerId }")= worker.WorkerName
+			a(href="./workers/#{ worker.WorkerId }")= worker.WorkerName
 						

@@ -1,7 +1,16 @@
 extends ./_shared/layout
 block title
 	title Workers
-block content	
+block content
+
+	form.w
+		input(type="text", name="worker", placeholder="Enter a work item...", required)
+		select(name="gender", required)
+			option(value="0") female
+			option(value="1") male
+		
+		button(type="submit") Add Work Item
+	
 	h1 Workers
 	
 	ul

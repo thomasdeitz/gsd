@@ -1,6 +1,21 @@
+@import url("https://fonts.googleapis.com/css?family=Skranji");
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 300; }
+  background-color: #b5e3db;
+  font-family: "Skranji", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  color: white;
+  text-align: center; }
+
+a {
+  text-decoration: none;
+  padding: 20px;
+  border-radius: 40px;
+  background-color: rgba(255, 255, 255, 0.25);
+  color: white;
+  margin: 10px; }
+  a:hover {
+    background-color: white;
+    color: #b5e3db; }
 
 ul {
   list-style: none;
@@ -14,15 +29,73 @@ ul {
 table {
   perspective: 2000px; }
 
-tr {
-  position: relative;
-  display: block;
+input, button {
   margin: 10px;
   padding: 20px;
-  border-radius: 10px;
-  background-color: lime;
-  transform: scaleX(1) scaleY(1) scaleZ(1) rotateX(3deg) rotateY(35deg) rotateZ(0deg) skew(20deg, 0deg);
-  perspective-origin: 75% 34%; }
-  tr td {
-    transform: scaleX(1) scaleY(1) scaleZ(1) rotateX(-3deg) rotateY(-35deg) rotateZ(0deg) skew(-20deg, 0deg);
-    perspective-origin: 75% 34%; }
+  border-radius: 40px;
+  background-color: rgba(255, 255, 255, 0.25);
+  border: none;
+  outline: none;
+  font-family: "Skranji", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: white;
+  font-size: 14px; }
+  input:hover, button:hover {
+    background: rgba(255, 255, 255, 0.8); }
+  input:focus, button:focus {
+    background-color: white;
+    color: #b5e3db; }
+  input::placeholder, button::placeholder {
+    color: rgba(0, 0, 0, 0.12); }
+
+button {
+  background-color: rgba(0, 0, 0, 0.12);
+  cursor: pointer; }
+
+.work-item {
+  display: flex;
+  align-content: center;
+  justify-content: flex-start;
+  position: relative;
+  margin: 10px;
+  background-color: rgba(255, 255, 255, 0.25);
+  content: '';
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  border-radius: 40px;
+  text-align: left;
+  transition: padding .2s ease-in-out;
+  overflow: hidden; }
+  .work-item:hover {
+    padding-right: 120px; }
+    .work-item:hover > div:nth-child(4), .work-item:hover > div:nth-child(5), .work-item:hover > select:nth-child(4), .work-item:hover > select:nth-child(5) {
+      transform: translateX(0); }
+      .work-item:hover > div:nth-child(4) span:hover, .work-item:hover > div:nth-child(5) span:hover, .work-item:hover > select:nth-child(4) span:hover, .work-item:hover > select:nth-child(5) span:hover {
+        transform: scale(1.6);
+        cursor: pointer;
+        color: #B07B7D; }
+      .work-item:hover > div:nth-child(4) span:nth-child(2):hover, .work-item:hover > div:nth-child(5) span:nth-child(2):hover, .work-item:hover > select:nth-child(4) span:nth-child(2):hover, .work-item:hover > select:nth-child(5) span:nth-child(2):hover {
+        color: #32627D; }
+  .work-item > div, .work-item > select {
+    flex-grow: 1;
+    padding: 20px; }
+    .work-item > div:nth-child(3), .work-item > select:nth-child(3) {
+      display: none; }
+    .work-item > div:nth-child(4), .work-item > div:nth-child(5), .work-item > select:nth-child(4), .work-item > select:nth-child(5) {
+      position: absolute;
+      padding: 0px;
+      top: 0px;
+      right: 0px;
+      transform: translateX(100%);
+      transition: all .2s ease-in-out; }
+      .work-item > div:nth-child(4) span, .work-item > div:nth-child(5) span, .work-item > select:nth-child(4) span, .work-item > select:nth-child(5) span {
+        display: inline-block;
+        padding: 20px; }
+    .work-item > div:nth-child(1), .work-item > select:nth-child(1) {
+      width: 100%; }
+    .work-item > div:nth-child(2), .work-item > select:nth-child(2) {
+      flex-shrink: 1;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 40px;
+      color: #b5e3db; }

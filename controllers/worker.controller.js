@@ -40,4 +40,17 @@ module.exports = function(app) {
         });
 
     });
+    
+    //adds new worker
+	app.post('/worker', jsonParser, function(req, res){
+		var sql = "INSERT INTO Worker (WorkerName, Gender) VALUES ?";
+		var values = [[req.body.worker, req.body.gender]];
+		console.log(values);
+		con.query(sql, [values], function (err, result) {
+		    if (err) throw err;
+		    console.log("1 record inserted");
+		    console.log(values);
+		  });
+		res.json(req.body);
+	});
 };

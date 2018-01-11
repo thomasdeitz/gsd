@@ -1,6 +1,14 @@
 window.onload = function() {
-    var form = document.querySelector("form");
-    form.onsubmit = submitted.bind(form);
+    var form = document.querySelector("form.wi");
+    var form2 = document.querySelector("form.w");
+
+    if (form) {
+	    form.onsubmit = submitted.bind(form);
+    }
+    
+    if (form2) {
+	    form2.onsubmit = submittedw.bind(form2);
+    }
     
 	window.onclick = function (e) {
 	    if (e.target.classList.contains('remove')) {
@@ -10,6 +18,9 @@ window.onload = function() {
 		    var item = e.target.parentNode.parentNode.id;
 		    console.log(item);
 		    done(item, 1);
+	    } else if (e.target.parentNode.classList.contains('work-item')) {
+	        var item = e.target.parentNode.id;
+	        document.getElementsByTagName("body")[0].classList.add("claim")
 	    }
 	}
 	
@@ -72,6 +83,29 @@ function submitted(event) {
 
 }
 
+
+function submittedw(event) {
+	event.preventDefault();
+	var worker = {};
+	
+	worker.worker = document.querySelector('form').getElementsByTagName('input')[0].value;
+	worker.gender = document.getElementsByTagName("select")[0].value;
+	console.log(worker);
+    var request = new Request('/worker', {
+		method: 'POST',
+		body:  JSON.stringify(worker),
+		headers: new Headers({ 
+			'Content-Type': 'application/json; charset=utf-8' 
+		})
+	});
+	    
+	fetch(request).then(
+		function(response) {
+			location.reload();
+	})
+
+}
+
 function deleted(el) {
 
     var request = new Request('/work/'+el, {
@@ -102,6 +136,10 @@ function updated(el, worker) {
 			
 	})
 
+}
+
+function claim(work) {
+	
 }
 
 function done(el, status) {

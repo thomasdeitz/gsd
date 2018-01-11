@@ -23,7 +23,6 @@ module.exports = function(app) {
 		con.query(getWork + getWorkers, function (err, result, fields) {
 			if (err) throw err;
 				res.render('work', {work: result[0], workers: result[1]});
-				console.log(result);
 		});
 	});
 	

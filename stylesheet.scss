@@ -1,6 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Skranji');
+
 body {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background-color: rgb(181,227,219);
+	font-family: "Skranji", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight:300;
+	color:white;
+	text-align: center;
+}
+
+a {
+	text-decoration: none;
+	padding:20px;
+	border-radius:40px;
+	background-color: rgba(white, .25);
+	color:white;
+	margin:10px;
+	
+	&:hover {
+		background-color:white;
+		color: rgb(181,227,219);
+	}
+	
 }
 
 ul {
@@ -19,13 +39,103 @@ table {
 	perspective: 2000px;
 }
 
-tr {
+input, button {
+	margin:10px;
+	padding:20px;
+	border-radius:40px;
+	background-color: rgba(white, .25);
+	border: none;
+	outline:none;
+	font-family: "Skranji", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color:white;
+	font-size: 14px;
+	
+	&:hover {
+		background: rgba(white, .8);
+	}
+	&:focus {
+		
+		background-color:white;
+		color:rgb(181,227,219);
+	}
+	
+	&::placeholder {
+		color: rgba(0,0,0,.12);
+	}
+}
+
+button {
+	background-color: rgba(0,0,0,.12);
+	cursor:pointer;
+}
+
+.work-item {
+	display:flex;
+	align-content: center;
+	justify-content: flex-start;
 	position:relative;
-		//display:block;
-		margin:10px;
+	margin:10px;
+	background-color: rgba(white, .25);
+	content:'';
+	top:0px;
+	bottom:0px;
+	left:0px;
+	right:0px;
+	border-radius:40px;
+	text-align: left;
+	transition: padding .2s ease-in-out;
+	overflow:hidden;
+	&:hover {
+		padding-right:120px;
+
+		& > div, & > select { 
+			&:nth-child(4), &:nth-child(5) { 
+				transform:translateX(0);
+				
+				span:hover {
+					transform: scale(1.6);
+					cursor: pointer;
+					color:#B07B7D;
+				}
+				
+				span:nth-child(2):hover {
+					color:#32627D;
+				}
+			}
+				
+		}
+	}
+	
+	& > div, & > select {
+		flex-grow: 1;
 		padding:20px;
-		border-radius: 10px;
-		//background-color:lime;
-		//transform: scaleX(1) scaleY(1) scaleZ(1) rotateX(3deg) rotateY(35deg) rotateZ(0deg) skew(20deg, 0deg);
-		//perspective-origin: 75% 34%;
+		
+		&:nth-child(3) {
+			display:none;
+		}
+		
+		&:nth-child(4), &:nth-child(5) {
+			position:absolute;
+			padding:0px;
+			top:0px;
+			right:0px;
+			transform:translateX(100%);
+			transition:all .2s ease-in-out;
+			span {
+				display:inline-block;
+				padding:20px;
+			}
+		}
+		
+		&:nth-child(1) {
+			width:100%;
+		}
+		
+		&:nth-child(2) {
+			flex-shrink:1;
+			background: rgba(white, .8);
+			border-radius:40px;
+			color:rgb(181,227,219);
+		}
+	}	
 }
