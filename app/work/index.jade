@@ -1,4 +1,4 @@
-extends ./_shared/layout
+extends ../layout
 block title
 	title Work to be done.
 
@@ -33,4 +33,3 @@ block content
 		h3 Workers				
 		each worker in workers
 			a(href="./workers/#{ worker.WorkerId }")= worker.WorkerName
-						

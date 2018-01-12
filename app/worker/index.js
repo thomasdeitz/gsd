@@ -1,8 +1,8 @@
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 var mysql = require('mysql');
-var configDB = require('../config/database.js');
-var con = mysql.createConnection(configDB);
+var configDB = require('../../config');
+var con = mysql.createConnection(config.database);
 
 con.connect();
 
@@ -12,7 +12,7 @@ module.exports = function(app) {
     app.get('/workers', function(req, res) {
         con.query("SELECT WorkerName AS name, WorkerId AS id FROM Worker", function(err, result, fields) {
             if (err) throw err;
-            res.render('workers', {
+            res.render('worker', {
                 workers: result
             });
         });

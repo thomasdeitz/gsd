@@ -15,17 +15,19 @@ var sequelize = require("sequelize");
 var sass = require('node-sass-middleware');
 var path = require('path');
 
-var configDB = require('./config/database.js');
+var config = require('./config');
 
 var authController = require('./controllers/auth.controller');
-var workController = require('./controllers/work.controller');
+var workController = require('./app/work');
 var workerController = require('./controllers/worker.controller');
 
 // require('./config/passport')(passport); // pass passport for configuration
-mysql.createConnection(configDB);
+mysql.createConnection(config.database);
 
 // setup template engine
 app.set('view engine', 'jade');
+// setup view directory
+app.set('views', path.join(__dirname, 'app'));
 
 // set up our express application
 app.use(cookieParser()); // read cookies (needed for auth)

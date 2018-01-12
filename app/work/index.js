@@ -1,16 +1,10 @@
 var bodyParser = require('body-parser');
-var mysql = require('mysql');
 var jsonParser = bodyParser.json();
+var mysql = require('mysql');
+var config = require('../../config');
+var con = mysql.createConnection(config.database);
 
-var con = mysql.createConnection({
-  multipleStatements: true,
-  host: "localhost",
-  user: "thomasd4_dbTest",
-  password: "Td11-23-99",
-  database: "thomasd4_dbTest"
-});
-
-con.connect({ multipleStatements: true });
+con.connect();
 
 module.exports = function(app) {
 	
@@ -22,7 +16,7 @@ module.exports = function(app) {
 		
 		con.query(getWork + getWorkers, function (err, result, fields) {
 			if (err) throw err;
-				res.render('work', {work: result[0], workers: result[1]});
+			res.render('work', {work: result[0], workers: result[1]});
 		});
 	});
 	
@@ -32,7 +26,7 @@ module.exports = function(app) {
 		var values = [[req.body.name, req.body.value, 0]];
 		con.query(sql, [values], function (err, result) {
 		    if (err) throw err;
-		    	console.log("1 record inserted");
+		    console.log("1 record inserted");
 		  });
 		res.json(req.body);
 	});
@@ -40,7 +34,7 @@ module.exports = function(app) {
 	app.get('/availableworkers', function(req, res){
 		con.query("SELECT * FROM Worker", function (err, result, fields) {
 			if (err) throw err;
-		    	res.json(result);
+		    res.json(result);
 		 });
 	});
 	
@@ -51,7 +45,7 @@ module.exports = function(app) {
 		console.log(sql, worker, wi);
 			con.query(sql, [worker, wi], function (err, result) {
 			    if (err) throw err;
-			    	console.log("1 record updated");
+			    console.log("1 record updated");
 			  });
 			res.json(req.body);
 	});
@@ -63,7 +57,7 @@ module.exports = function(app) {
 		console.log(sql, status_id, wi);
 			con.query(sql, [status_id, wi], function (err, result) {
 			    if (err) throw err;
-			    	console.log("1 record updated");
+			    console.log("1 record updated");
 			  });
 			res.json(req.body);
 	});
