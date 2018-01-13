@@ -1,4 +1,4 @@
-extends ./_shared/layout
+extends ../layout
 block title
 	title Workers
 block content
@@ -16,4 +16,4 @@ block content
 	ul
 		each worker in workers
 			li
-				a(href="./workers/#{ worker.id }")= worker.name
+				a(href="./worker/#{ worker.id }")= worker.name

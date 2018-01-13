@@ -4,7 +4,9 @@ body {
   font-family: "Skranji", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   color: white;
-  text-align: center; }
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto; }
 
 a {
   text-decoration: none;

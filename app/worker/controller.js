@@ -1,24 +1,13 @@
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
-var mysql = require('mysql');
-var configDB = require('../config/database.js');
-var con = mysql.createConnection(configDB);
+var mysql = require('mysql2');
+var config = require('../../config');
+var con = mysql.createConnection(config.database);
 
 con.connect();
 
 module.exports = function(app) {
-
-    //gets all workers
-    app.get('/workers', function(req, res) {
-        con.query("SELECT WorkerName AS name, WorkerId AS id FROM Worker", function(err, result, fields) {
-            if (err) throw err;
-            res.render('workers', {
-                workers: result
-            });
-        });
-    });
-
-    app.get('/workers/:worker_id', function(req, res) {
+    app.get('/worker/:worker_id', function(req, res) {
         var sql1 = "SELECT ( SELECT WorkerName FROM Worker WHERE WorkerId = ? LIMIT 1) AS name, ( SELECT COUNT(*) FROM Work WHERE WorkerId = ? AND  WorkStatus = 1 ) AS count, ( SELECT SUM(WorkValue) FROM Work WHERE WorkerId = ? AND WorkStatus = 1 ) AS total;";
         var sql2 = "SELECT WorkDescription AS name, WorkValue AS value FROM Work WHERE WorkerId = ? AND WorkStatus = 1;";
         

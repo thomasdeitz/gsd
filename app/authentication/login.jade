@@ -1,0 +1,13 @@
+extends ../layout
+block title
+	title Log In
+
+block content
+	form(method="post" action="/login")
+		label Username
+		input(name="email" type="email")
+		
+		label Password
+		input(name="password" type="password")
+		
+		button Log In

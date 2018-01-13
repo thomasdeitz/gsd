@@ -1,0 +1,13 @@
+extends ../layout
+block title
+	title Sign Up
+
+block content
+	form(method="post" action="/signup")
+		label Username
+		input(name="email" type="email")
+		
+		label Password
+		input(name="password" type="password")
+		
+		button Sign Up

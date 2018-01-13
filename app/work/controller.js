@@ -1,6 +1,6 @@
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
-var mysql = require('mysql');
+var mysql = require('mysql2');
 var config = require('../../config');
 var con = mysql.createConnection(config.database);
 
