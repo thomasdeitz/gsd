@@ -5,6 +5,7 @@ var sass = require('node-sass-middleware');
 var path = require('path');
 
 var app = express();
+var http = require('http').Server(app);
 
 // setup template engine
 app.set('view engine', 'jade');
@@ -26,6 +27,6 @@ workController(app);
 workerController(app);
 
 //listen to port
-app.listen(process.env.PORT || 9000, function(){
-  console.log('listening on', app.address().port);
+http.listen(process.env.PORT || 9000, function(){
+  console.log('listening on', http.address().port);
 });
