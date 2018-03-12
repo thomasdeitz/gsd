@@ -26,5 +26,6 @@ workController(app);
 workerController(app);
 
 //listen to port
-app.listen($PORT);
-console.log('You are listening on port $PORT');
+app.listen(process.env.PORT || 9000, function(){
+  console.log('listening on', app.address().port);
+});
