@@ -4,7 +4,8 @@
   "description": "An app to manage, track, & reward family members and their participation in house hold work.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "PORT=$PORT node app.js"
   },
   "author": "Thomas Deitz",
   "license": "ISC",
