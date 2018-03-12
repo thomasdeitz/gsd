@@ -4,6 +4,7 @@
   "description": "An app to manage, track, & reward family members and their participation in house hold work.",
   "main": "app.js",
   "scripts": {
+    "start": "PORT=$PORT node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Thomas Deitz",
@@ -12,6 +13,8 @@
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "jade": "^1.11.0",
+    "mysql": "^2.15.0",
+    "mysql2": "^1.5.1",
     "node-sass-middleware": "^0.11.0"
   }
   "engines": {

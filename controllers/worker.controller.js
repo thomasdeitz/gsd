@@ -5,9 +5,9 @@ var jsonParser = bodyParser.json();
 var con = mysql.createConnection({
   multipleStatements: true,
   host: "localhost",
-  user: "thomasd4_dbTest",
-  password: "Td11-23-99",
-  database: "thomasd4_dbTest"
+  user: "gsDbUser",
+  password: "d5il5a11",
+  database: "gsDb"
 });
 
 con.connect();
