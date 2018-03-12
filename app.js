@@ -26,5 +26,5 @@ workController(app);
 workerController(app);
 
 //listen to port
-app.listen(9000);
-console.log('You are listening on port 9000');
+app.listen(3000);
+console.log('You are listening on port 3000');
