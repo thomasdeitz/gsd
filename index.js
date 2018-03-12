@@ -17,6 +17,8 @@ var path = require('path');
 
 var config = require('./config');
 
+var homeController = require('./app/homepage/controller');
+var userController = require('./app/profile/controller');
 var authController = require('./app/authentication/controller');
 var workController = require('./app/work/controller');
 var workersController = require('./app/workers/controller');
@@ -59,9 +61,11 @@ app.use('/', express.static(path.join(__dirname, 'app', 'client')));﻿
 
 //fire controllers
 authController(app, passport);
-workController(app);
+workController(app, passport);
 workersController(app);
 workerController(app);
+homeController(app);
+userController(app);
 
 //listen to port
 app.listen(port);
@@ -80,7 +84,3 @@ models.sequelize.sync().then(function() {
     console.log(err, "Something went wrong with the Database Update!")
  
 });
-
-sequelize.query("SELECT * FROM Work").then(myTableRows => {
-  console.log(myTableRows)
-})

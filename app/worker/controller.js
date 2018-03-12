@@ -7,7 +7,7 @@ var con = mysql.createConnection(config.database);
 con.connect();
 
 module.exports = function(app) {
-    app.get('/worker/:worker_id', function(req, res) {
+    app.get('/worker/:worker_id', isLoggedIn, function(req, res) {
         var sql1 = "SELECT ( SELECT WorkerName FROM Worker WHERE WorkerId = ? LIMIT 1) AS name, ( SELECT COUNT(*) FROM Work WHERE WorkerId = ? AND  WorkStatus = 1 ) AS count, ( SELECT SUM(WorkValue) FROM Work WHERE WorkerId = ? AND WorkStatus = 1 ) AS total;";
         var sql2 = "SELECT WorkDescription AS name, WorkValue AS value FROM Work WHERE WorkerId = ? AND WorkStatus = 1;";
         
@@ -18,7 +18,8 @@ module.exports = function(app) {
             var data = results[0][0];
             data.workList = results[1];
             res.render('worker', {
-                worker: data
+                worker: data,
+                user: res.user
             });
         });
 
@@ -36,4 +37,20 @@ module.exports = function(app) {
 		  });
 		res.json(req.body);
 	});
+	
+	//are you logged in
+	function isLoggedIn(req, res, next) {
+		
+		console.log('run', req)
+		//res.user = req.session.passport.user;
+		res.user = req.user;
+		
+
+	    // if user is authenticated in the session, carry on 
+	    if (req.isAuthenticated())
+	        return next();
+	
+	    // if they aren't redirect them to the home page
+	    	res.redirect('/login');
+	}
 };

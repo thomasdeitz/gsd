@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+	h2 Profile
+	
+	form
+		label First Name
+		input(type="text" value="#{ user.firstname || '' }")
+		
+		label Last Name
+		input(type="text" value="#{ user.lastname || '' }")
+		
+		label email
+		input(type="email" value="#{ user.email || '' }")
+		
+		
+		

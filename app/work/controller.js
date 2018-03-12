@@ -9,14 +9,14 @@ con.connect();
 module.exports = function(app) {
 	
 	//gets all work Items
-	app.get('/work', function(req, res){
+	app.get('/work', isLoggedIn, function(req, res){
 		var getWork = "SELECT * FROM Work WHERE NOT WorkStatus = 1;";
 		var getWorkers = "SELECT WorkerName, WorkerId FROM Worker;";
 		
 		
 		con.query(getWork + getWorkers, function (err, result, fields) {
 			if (err) throw err;
-			res.render('work', {work: result[0], workers: result[1]});
+			res.render('work', {work: result[0], workers: result[1], user: res.user });
 		});
 	});
 	
@@ -72,4 +72,21 @@ module.exports = function(app) {
 		  });
 		  res.json(req.body);
 	});
+	
+	//are you logged in
+	function isLoggedIn(req, res, next) {
+		
+		//console.log(req)
+		//res.user = req.session.passport.user;
+		res.user = req.user;
+		
+
+	    // if user is authenticated in the session, carry on 
+	    if (req.isAuthenticated())
+	        return next();
+	
+	    // if they aren't redirect them to the home page
+	    	res.redirect('/login');
+	}
+
 };

@@ -40,8 +40,17 @@ module.exports = function(app) {
 	 
 	));
 	
+	app.get('/logout', function(req, res) {
+ 
+	    req.session.destroy(function(err) {
+	 
+	        res.redirect('/');
+	 
+	    });
+    });
+	
 	app.post('/login', passport.authenticate('local-signin', {
-        successRedirect: '/dashboard',
+        successRedirect: '/work',
  
         failureRedirect: '/login'
     }
