@@ -4,16 +4,24 @@ const jsonParser = bodyParser.json();
 const { Client, Pool } = require('pg');
 
 const connectionString = process.env.DATABASE_URL || {
-  user: 'thomasd4_test',
+  user: 'thomasd4_blanku',
   host: 'localhost',
-  database: 'thomasd4_gp',
-  password: 'test1',
+  database: 'thomasd4_blankpg',
+  password: 'blank1',
   port: 5432
 };
 
 const pool = new Pool(connectionString);
 
 module.exports = function(app) {
+
+  pool.query("CREATE TABLE IF NOT EXISTS worker (worker_id serial PRIMARY KEY, worker_name text NOT NULL, gender integer NOT NULL)", (err, result) => {
+    if (err) {
+      console.log(err.stack)
+    } else {
+      console.log('worker table created')
+	  }
+  });
 
     //gets all workers
     app.get('/workers', function(req, res) {

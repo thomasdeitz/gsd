@@ -4,10 +4,10 @@ const jsonParser = bodyParser.json();
 const { Client, Pool } = require('pg');
 
 const connectionString = process.env.DATABASE_URL || {
-  user: 'thomasd4_test',
+  user: 'thomasd4_blanku',
   host: 'localhost',
-  database: 'thomasd4_gp',
-  password: 'test1',
+  database: 'thomasd4_blankpg',
+  password: 'blank1',
   port: 5432
 };
 
@@ -15,6 +15,14 @@ const pool = new Pool(connectionString);
 
 module.exports = function(app) {
   //pool.query("CREATE SEQUENCE work_id_seq; ALTER TABLE work ALTER COLUMN work_id SET DEFAULT NEXTVAL('work_id_seq');");
+  
+  pool.query("CREATE TABLE IF NOT EXISTS work (work_description text NOT NULL, work_id serial PRIMARY KEY, work_status integer NOT NULL, work_value integer NOT NULL, worker_id integer)", (err, result) => {
+    if (err) {
+      console.log(err.stack)
+    } else {
+      console.log('worker table created')
+	  }
+  });
   
   app.get('/', function(req, res){
     res.render('home')
