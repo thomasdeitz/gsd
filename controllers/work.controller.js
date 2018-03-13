@@ -90,7 +90,7 @@ module.exports = function(app) {
 	
 	//deletes work item
 	app.delete('/work/:wI', function(req, res){
-	  var sql = "DELETE FROM work WHERE work_id = ?$1";
+	  var sql = "DELETE FROM work WHERE work_id = $1";
 	  var values = [req.params.wI];
 	  pool.query(sql, values, (err, result) => {
 	    if (err) {
