@@ -79,7 +79,7 @@ module.exports = function(app) {
 		var updateStatus = "UPDATE work SET work_status = $1 WHERE work_id = $2";
 		var values = [req.body.status, req.params.wI];
 		console.log(updateStatus, status_id, wi);
-		pool.query(pool, values, (err, result) => {
+		pool.query(updateStatus, values, (err, result) => {
       if (err) {
         console.log(err.stack)
       } else {
