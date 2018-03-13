@@ -1,3 +1,5 @@
+var workToClaim = "";
+
 window.onload = function() {
     var form = document.querySelector("form.wi");
     var form2 = document.querySelector("form.w");
@@ -18,20 +20,23 @@ window.onload = function() {
 		    var item = e.target.parentNode.parentNode.id;
 		    console.log(item);
 		    done(item, 1);
-	    } else if (e.target.parentNode.classList.contains('work-item')) {
-	        var item = e.target.parentNode.id;
-	        document.getElementsByTagName("body")[0].classList.add("claim")
+	    } else if (e.target.classList.contains('openClaim')) {
+        var item = e.target.parentNode.parentNode.id;
+        var button = document.getElementsByClassName("claimLink");
+        for (i = 0; i < button.length; i++) {
+          button[i].setAttribute('href', '#'+item);
+        }
+        document.getElementsByTagName("body")[0].classList.add("claim");
+	    } else if (e.target.classList.contains('claimLink')) {
+  	    e.preventDefault();
+        var work = e.target.href.split('#').pop();
+        var worker = e.target.getAttribute("data-id");
+        console.log(work,worker);
+        updated(work, worker);
+        document.getElementsByTagName("body")[0].classList.remove("claim");
+	    } else if (e.target.classList.contains('claim')) {
+        document.getElementsByTagName("body")[0].classList.remove("claim");
 	    }
-	}
-	
-	var selectors = document.getElementsByClassName("worker-select");
-	for (var i = 0; i < selectors.length; i++) {
-		selectors[i].addEventListener('change',function(){
-			
-	    	var item = this.parentNode.parentNode.id;
-	    	console.log(item);
-		        updated(item, this.value);
-		});
 	}
 	
 
@@ -133,7 +138,7 @@ function updated(el, worker) {
 	    
 	fetch(request).then(
 		function(response) {
-			
+			location.reload();
 	})
 
 }

@@ -1,56 +1,63 @@
-var bodyParser = require('body-parser');
-var mysql = require('mysql');
-var jsonParser = bodyParser.json();
+const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json();
 
-var con = mysql.createConnection({
-  multipleStatements: true,
-  host: "localhost",
-  user: "thomasd4_dbTest",
-  password: "Td11-23-99",
-  database: "thomasd4_dbTest"
-});
+const { Client, Pool } = require('pg');
 
-con.connect();
+const connectionString = process.env.DATABASE_URL || {
+  user: 'thomasd4_test',
+  host: 'localhost',
+  database: 'thomasd4_gp',
+  password: 'test1',
+  port: 5432
+};
+
+const pool = new Pool(connectionString);
 
 module.exports = function(app) {
 
     //gets all workers
     app.get('/workers', function(req, res) {
-        con.query("SELECT WorkerName AS name, WorkerId AS id FROM Worker", function(err, result, fields) {
-            if (err) throw err;
-            res.render('workers', {
-                workers: result
-            });
+        pool.query("SELECT worker_name LIMIT 1 AS name, worker_id AS id FROM worker", (err, result) => {
+          if (err) {
+            console.log(err.stack)
+          } else {
+            res.render('workers', { workers: result.rows })
+    		  }
         });
     });
 
     app.get('/workers/:worker_id', function(req, res) {
-        var sql1 = "SELECT ( SELECT WorkerName FROM Worker WHERE WorkerId = ? LIMIT 1) AS name, ( SELECT COUNT(*) FROM Work WHERE WorkerId = ? AND  WorkStatus = 1 ) AS count, ( SELECT SUM(WorkValue) FROM Work WHERE WorkerId = ? AND WorkStatus = 1 ) AS total;";
-        var sql2 = "SELECT WorkDescription AS name, WorkValue AS value FROM Work WHERE WorkerId = ? AND WorkStatus = 1;";
+        var getWorkerWork = "SELECT * FROM work INNER JOIN worker ON worker.worker_id = work.worker_id WHERE work.worker_id = $1 AND work_status = 1;";
+        var values = [req.params.worker_id];
         
-        var worker_id = req.params.worker_id;
-        
-        con.query(sql1 + sql2, [worker_id,worker_id,worker_id, worker_id], function(err, results, fields) {
-            if (err) throw err;
-            var data = results[0][0];
-            data.workList = results[1];
-            res.render('worker', {
-                worker: data
-            });
+        pool.query(getWorkerWork, values, function(err, results) {
+            if (err) {
+              console.log(err.stack)
+            } else {
+              var rows = results.rows;
+              var data = {}
+              data.name = rows[0].worker_name;
+              data.count = rows.length;
+              data.total = rows.reduce((total, rows) => { return total + rows.work_value},0);
+              data.workList = results.rows;
+              console.log(data);
+              res.render('worker', { worker: data });
+            }
         });
 
     });
     
-    //adds new worker
+  //adds new worker
 	app.post('/worker', jsonParser, function(req, res){
-		var sql = "INSERT INTO Worker (WorkerName, Gender) VALUES ?";
-		var values = [[req.body.worker, req.body.gender]];
-		console.log(values);
-		con.query(sql, [values], function (err, result) {
-		    if (err) throw err;
-		    console.log("1 record inserted");
-		    console.log(values);
+		var addWorker = "INSERT INTO worker (worker_name, gender) VALUES $1";
+		var values = [req.body.worker, req.body.gender];
+
+		pool.query(addWorker, [values], function (err, result) {
+		    if (err) {
+          console.log(err.stack)
+        } else {
+          res.json(req.body);
+        }
 		  });
-		res.json(req.body);
 	});
 };

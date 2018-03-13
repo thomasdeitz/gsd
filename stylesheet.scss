@@ -6,6 +6,30 @@ body {
 	font-weight:300;
 	color:white;
 	text-align: center;
+	
+	&.claim:after {
+  	background-color: rgba(0,0,0,.24);
+  	content: "";
+  	position:absolute;
+  	top:0px;
+  	left:0px;
+  	width:100%;;
+  	height:100%;
+	}
+}
+.modal {
+    display:none;
+    padding:50px 100px 100px 100px;
+    position:absolute;
+    top:50%;
+    background-color:rgb(181,227,219);
+    border-radius: 40px;
+    left:50%;
+    transform: translate(-50%, -50%);
+  .claim & {
+    display:block;
+    z-index:100;
+  }
 }
 
 a {
@@ -86,10 +110,10 @@ button {
 	transition: padding .2s ease-in-out;
 	overflow:hidden;
 	&:hover {
-		padding-right:120px;
+		padding-right:180px;
 
 		& > div, & > select { 
-			&:nth-child(4), &:nth-child(5) { 
+			&:nth-child(3), &:nth-child(4) { 
 				transform:translateX(0);
 				
 				span:hover {
@@ -97,9 +121,13 @@ button {
 					cursor: pointer;
 					color:#B07B7D;
 				}
-				
-				span:nth-child(2):hover {
+
+				span:nth-child(1):hover {
 					color:#32627D;
+				}
+
+				span:nth-child(2):hover {
+					color:#B6C66A;
 				}
 			}
 				
@@ -110,11 +138,7 @@ button {
 		flex-grow: 1;
 		padding:20px;
 		
-		&:nth-child(3) {
-			display:none;
-		}
-		
-		&:nth-child(4), &:nth-child(5) {
+		&:nth-child(3), &:nth-child(4) {
 			position:absolute;
 			padding:0px;
 			top:0px;

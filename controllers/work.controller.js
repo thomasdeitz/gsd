@@ -1,81 +1,100 @@
-var bodyParser = require('body-parser');
-var mysql = require('mysql');
-var jsonParser = bodyParser.json();
+const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json();
 
-var con = mysql.createConnection({
-  multipleStatements: true,
-  host: "localhost",
-  user: "thomasd4_dbTest",
-  password: "Td11-23-99",
-  database: "thomasd4_dbTest"
-});
+const { Client, Pool } = require('pg');
 
-con.connect({ multipleStatements: true });
+const connectionString = process.env.DATABASE_URL || {
+  user: 'thomasd4_test',
+  host: 'localhost',
+  database: 'thomasd4_gp',
+  password: 'test1',
+  port: 5432
+};
+
+const pool = new Pool(connectionString);
 
 module.exports = function(app) {
-	
-	//gets all work Items
+  //pool.query("CREATE SEQUENCE work_id_seq; ALTER TABLE work ALTER COLUMN work_id SET DEFAULT NEXTVAL('work_id_seq');");
+  
+  app.get('/', function(req, res){
+    res.render('home')
+	});
+  
+  //gets all work Items
 	app.get('/work', function(req, res){
-		var getWork = "SELECT * FROM Work WHERE NOT WorkStatus = 1;";
-		var getWorkers = "SELECT WorkerName, WorkerId FROM Worker;";
+		var getWork = "SELECT * FROM work WHERE work_status NOT IN (1);";
+		var getWorkers = "SELECT worker_name, worker_id FROM worker;";
 		
-		
-		con.query(getWork + getWorkers, function (err, result, fields) {
-			if (err) throw err;
-				res.render('work', {work: result[0], workers: result[1]});
+		pool.query(getWork + getWorkers, (err, result) => {
+			if (err) {
+          console.log(err.stack)
+        } else {
+          res.render('work', {work: result[0].rows, workers: result[1].rows})
+			 }
 		});
 	});
-	
+
 	//adds new work item
 	app.post('/work', jsonParser, function(req, res){
-		var sql = "INSERT INTO Work (WorkDescription, WorkValue, WorkStatus) VALUES ?";
-		var values = [[req.body.name, req.body.value, 0]];
-		con.query(sql, [values], function (err, result) {
-		    if (err) throw err;
-		    	console.log("1 record inserted");
+		var addWork = "INSERT INTO work (work_description, work_value, work_status) VALUES ($1, $2, $3)";
+		var values = [req.body.name, req.body.value, 0];
+		pool.query(addWork, values, (err, result) => {
+		    if (err) {
+          console.log(err.stack)
+        } else {
+          res.json(req.body);
+        }
 		  });
-		res.json(req.body);
 	});
-	
+
 	app.get('/availableworkers', function(req, res){
-		con.query("SELECT * FROM Worker", function (err, result, fields) {
-			if (err) throw err;
-		    	res.json(result);
+		pool.query("SELECT * FROM worker", (err, result, fields) => {
+			if (err) {
+          console.log(err.stack)
+        } else {
+          console.log(fields);
+          res.json(result[0]);
+			 }
 		 });
 	});
-	
+
 	app.patch('/work/claim/:wI', jsonParser, function(req, res){
-		var sql = "UPDATE Work SET WorkerId = ? WHERE WorkId = ?";
-		var worker = [[req.body.worker_id]];
-		var wi = req.params.wI;
-		console.log(sql, worker, wi);
-			con.query(sql, [worker, wi], function (err, result) {
-			    if (err) throw err;
-			    	console.log("1 record updated");
-			  });
-			res.json(req.body);
+		var claimWork = "UPDATE work SET worker_id = $1 WHERE work_id = $2";
+		var values = [req.body.worker_id, req.params.wI];
+		console.log(values);
+		pool.query(claimWork, values, (err, result) => {
+		    if (err) {
+          console.log(err.stack)
+        } else {
+          res.json(req.body);
+        }
+		  });
 	});
-	
+
+
 	app.patch('/work/status/:wI', jsonParser, function(req, res){
-		var sql = "UPDATE Work SET WorkStatus = ? WHERE WorkId = ?";
-		var status_id = [[req.body.status]];
-		var wi = req.params.wI;
-		console.log(sql, status_id, wi);
-			con.query(sql, [status_id, wi], function (err, result) {
-			    if (err) throw err;
-			    	console.log("1 record updated");
-			  });
-			res.json(req.body);
+		var updateStatus = "UPDATE work SET work_status = $1 WHERE work_id = $2";
+		var values = [req.body.status, req.params.wI];
+		console.log(updateStatus, status_id, wi);
+		pool.query(pool, values, (err, result) => {
+      if (err) {
+        console.log(err.stack)
+      } else {
+        res.json(req.body);
+      }
+    });
 	});
 	
 	//deletes work item
 	app.delete('/work/:wI', function(req, res){
-		  var sql = "DELETE FROM Work WHERE WorkId = ?";
-		  var value = req.params.wI;
-		  con.query(sql, [value], function (err, result) {
-		    if (err) throw err;
-		    console.log("Number of records deleted: " + result.affectedRows);
-		  });
-		  res.json(req.body);
+	  var sql = "DELETE FROM work WHERE work_id = ?$1";
+	  var values = [req.params.wI];
+	  pool.query(sql, values, (err, result) => {
+	    if (err) {
+        console.log(err.stack)
+      } else {
+        res.json(req.body);
+      }
+		});
 	});
 };

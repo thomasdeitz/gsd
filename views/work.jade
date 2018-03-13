@@ -14,23 +14,29 @@ block content
 	h1 Work Items
 
 	each workItem in work
-		div(id= workItem.WorkId).work-item
-			div= workItem.WorkDescription
-			if workItem.WorkValue > 0 
-				div  $#{workItem.WorkValue}.00
+		div(id= workItem.work_id).work-item
+			div= workItem.work_description
+				- var worker = workers.filter(worker => worker.worker_id == workItem.worker_id)[0]
+				if typeof worker != "undefined"
+					span &nbsp;-&nbsp;#{worker.worker_name}
+			if workItem.work_value > 0 
+				div  $#{workItem.work_value}.00
 			else
 				div FREE
-			td
-				select.worker-select(WorkValue= workItem.WorkerId)
-					option(value="0") Unassigned
-					each worker in workers
-						option(value= worker.WorkerId selected= workItem.WorkerId == worker.WorkerId ? true : false)
-							= worker.WorkerName
 			div
-				span.remove.fa.fa-times
+				span.openClaim.fa.fa-handshake-o
 				span.done.fa.fa-check
+				span.remove.fa.fa-times
+	div.modal
+		h2 Who is working on this work?
+		br
+		br
+		a(data-id="0" href="").claimLink Unassigned
+		each worker in workers
+			a(data-id="#{worker.worker_id}" href="").claimLink= worker.worker_name
+
 	div#workers
 		h3 Workers				
 		each worker in workers
-			a(href="./workers/#{ worker.WorkerId }")= worker.WorkerName
+			a(href="./workers/#{ worker.worker_id }")= worker.worker_name
 						

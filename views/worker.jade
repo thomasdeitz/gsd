@@ -22,8 +22,8 @@ block content
 	h3 Work Items Completed
 	each workItem in worker.workList
 		div.work-item 
-			div= workItem.name 
-			if workItem.value > 0 
-				div  $#{workItem.value}.00
+			div= workItem.work_description 
+			if workItem.work_value > 0 
+				div  $#{workItem.work_value}.00
 			else
 				div FREE
