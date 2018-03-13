@@ -11,7 +11,7 @@ const connectionString = process.env.DATABASE_URL || {
   port: 5432
 };
 
-const pool = new Pool(connectionString:connectionString);
+const pool = new Pool(connectionString);
 
 module.exports = function(app) {
 
