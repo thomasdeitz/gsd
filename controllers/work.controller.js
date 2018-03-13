@@ -78,7 +78,7 @@ module.exports = function(app) {
 	app.patch('/work/status/:wI', jsonParser, function(req, res){
 		var updateStatus = "UPDATE work SET work_status = $1 WHERE work_id = $2";
 		var values = [req.body.status, req.params.wI];
-		console.log(updateStatus, status_id, wi);
+		console.log(updateStatus, values);
 		pool.query(updateStatus, values, (err, result) => {
       if (err) {
         console.log(err.stack)
