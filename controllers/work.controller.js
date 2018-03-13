@@ -11,7 +11,9 @@ const connectionString = process.env.DATABASE_URL || {
   port: 5432
 };
 
-const pool = new Pool(connectionString);
+const pool = new Pool({
+  connectionString: connectionString
+});
 
 module.exports = function(app) {
   //pool.query("CREATE SEQUENCE work_id_seq; ALTER TABLE work ALTER COLUMN work_id SET DEFAULT NEXTVAL('work_id_seq');");
