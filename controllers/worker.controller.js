@@ -18,13 +18,13 @@ const pool = new Pool({
 
 module.exports = function(app) {
 
-  /*pool.query("CREATE TABLE worker (worker_id serial PRIMARY KEY, worker_name text NOT NULL, gender integer NOT NULL)", (err, result) => {
+  pool.query("CREATE TABLE worker (worker_id serial PRIMARY KEY, worker_name text NOT NULL, gender integer NOT NULL)", (err, result) => {
     if (err) {
       console.log(err.stack)
     } else {
       console.log('worker table created')
 	  }
-  });*/
+  });
 
     //gets all workers
     app.get('/workers', function(req, res) {
