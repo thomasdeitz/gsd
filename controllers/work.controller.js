@@ -16,11 +16,11 @@ const pool = new Pool(connectionString);
 module.exports = function(app) {
   //pool.query("CREATE SEQUENCE work_id_seq; ALTER TABLE work ALTER COLUMN work_id SET DEFAULT NEXTVAL('work_id_seq');");
   
-  pool.query("CREATE TABLE IF NOT EXISTS work (work_description text NOT NULL, work_id serial PRIMARY KEY, work_status integer NOT NULL, work_value integer NOT NULL, worker_id integer)", (err, result) => {
+  pool.query("CREATE TABLE work (work_description text NOT NULL, work_id serial PRIMARY KEY, work_status integer NOT NULL, work_value integer NOT NULL, worker_id integer)", (err, result) => {
     if (err) {
       console.log(err.stack)
     } else {
-      console.log('worker table created')
+      console.log('work table created')
 	  }
   });
   
