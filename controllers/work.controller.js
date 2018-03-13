@@ -19,13 +19,13 @@ const pool = new Pool({
 module.exports = function(app) {
   //pool.query("CREATE SEQUENCE work_id_seq; ALTER TABLE work ALTER COLUMN work_id SET DEFAULT NEXTVAL('work_id_seq');");
   
-/*  pool.query("CREATE TABLE work (work_description text NOT NULL, work_id serial PRIMARY KEY, work_status integer NOT NULL, work_value integer NOT NULL, worker_id integer)", (err, result) => {
+  pool.query("INSERT INTO work VALUES ('Clean Abby''s Room', 35, 1, 0, 1);INSERT INTO work VALUES ('Clean Lounge Bookshelf', 40, 1, 1, 2);INSERT INTO work VALUES ('Clean Toilets', 39, 0, 2, NULL);INSERT INTO work VALUES ('Clean Isaac''s Room', 36, 1, 0, 3);INSERT INTO work VALUES ('Clean Lucas Room', 37, 1, 0, 2);INSERT INTO work VALUES ('Wipe of Tables', 42, 1, 1, 2);INSERT INTO work VALUES ('Organize Shoes', 43, 1, 1, 2);INSERT INTO work VALUES ('Clean Closet - Lucas', 44, 0, 0, 2);INSERT INTO work VALUES ('Clean Closet - Isaac', 49, 0, 0, 3);INSERT INTO work VALUES ('Watch the Mosier Boys', 58, 1, 2, 1);INSERT INTO work VALUES ('Clean Closet - Abby', 45, 0, 0, 0);INSERT INTO work VALUES ('Unload/Reload Dishwasher', 57, 0, 1, 0);INSERT INTO worker VALUES (1, 'Abigail', '0');INSERT INTO worker VALUES (2, 'Lucas', '1');INSERT INTO worker VALUES (3, 'Isaac', '1');", (err, result) => {
     if (err) {
       console.log(err.stack)
     } else {
       console.log('work table created')
 	  }
-  });*/
+  });
   
   app.get('/', function(req, res){
     res.render('home')
