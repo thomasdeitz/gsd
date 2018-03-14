@@ -9,11 +9,17 @@ block content
 			option(value="0") female
 			option(value="1") male
 		
-		button(type="submit") Add Work Item
+		button(type="submit") Add New Worker
 	
 	h1 Workers
 	
-	ul
+	ul(style="display:flex;")
 		each worker in workers
-			li
-				a(href="./workers/#{ worker.id }")= worker.name
+			li(style="width:33%;")
+				a(href="./workers/#{ worker.id }" style="display:block; position:relative;")
+					span.fa.fa-trophy.badge
+					span= worker.name
+					h1 $#{worker.total}.00
+					hr(style="border:none; border-bottom: 1px solid white;")
+					span= worker.count
+						span &nbsp;Jobs

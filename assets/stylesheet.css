@@ -27,6 +27,17 @@ body {
     display: block;
     z-index: 100; }
 
+.badge {
+  font-size: 48px !important;
+  color: #C6B66A;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  transform: translate(25%, -25%); }
+
+li:not(:first-child) .badge {
+  display: none !important; }
+
 a {
   text-decoration: none;
   padding: 20px;

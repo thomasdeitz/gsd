@@ -3,17 +3,11 @@ const jsonParser = bodyParser.json();
 
 const { Client, Pool } = require('pg');
 
-const connectionString = process.env.DATABASE_URL || {
-  user: 'thomasd4_blanku',
-  host: 'localhost',
-  database: 'thomasd4_blankpg',
-  password: 'blank1',
-  port: 5432
-};
+const connectionString = process.env.DATABASE_URL || 'postgres://thomasd4_test:test1@localhost:5432/thomasd4_gp';
 
 const pool = new Pool({
   connectionString: connectionString,
-  ssl: true
+  //ssl: true
 });
 
 module.exports = function(app) {

@@ -3,17 +3,20 @@ const jsonParser = bodyParser.json();
 
 const { Client, Pool } = require('pg');
 
-const connectionString = process.env.DATABASE_URL || {
+const connectionString = process.env.DATABASE_URL || 'postgres://thomasd4_test:test1@localhost:5432/thomasd4_gp';
+
+/*{
   user: 'thomasd4_blanku',
   host: 'localhost',
   database: 'thomasd4_blankpg',
   password: 'blank1',
   port: 5432
 };
+thomasd4_test:test1@localhost:5432/thomasd4_gp*/
 
 const pool = new Pool({
   connectionString: connectionString,
-  ssl: true
+  //ssl: true
 });
 
 module.exports = function(app) {
@@ -28,10 +31,11 @@ module.exports = function(app) {
 
     //gets all workers
     app.get('/workers', function(req, res) {
-        pool.query("SELECT worker_name LIMIT 1 AS name, worker_id AS id FROM worker", (err, result) => {
+        pool.query("SELECT worker_name AS name, worker.worker_id AS id, gender, SUM(work.work_value) AS total, COUNT(work) AS count FROM work INNER JOIN worker ON work.worker_id = worker.worker_id WHERE work_status = 1 GROUP BY worker.worker_name, worker.worker_id, gender ORDER BY COUNT(work) DESC;", (err, result) => {
           if (err) {
             console.log(err.stack)
           } else {
+            console.log(result.rows);
             res.render('workers', { workers: result.rows })
     		  }
         });
