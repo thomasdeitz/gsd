@@ -14,8 +14,7 @@
     "express": "^4.16.2",
     "jade": "^1.11.0",
     "node-sass-middleware": "^0.11.0",
-    "pg": "^7.4.1",
-    "pg-promise": "^8.2.2"
+    "pg": "^7.4.1"
   },
   "engines": {
     "node": "9.2.0",
